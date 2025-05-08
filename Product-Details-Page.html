@@ -1,0 +1,1677 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>
+         Coffee Brew - Premium Coffee Experience
+        </title>
+        <script src="https://cdn.tailwindcss.com">
+        </script>
+        <script>
+         tailwind.config = {
+                  theme: {
+                      extend: {
+                          colors: { primary: "#8B5A2B", secondary: "#D4A76A" },
+                          borderRadius: {
+                              none: "0px",
+                              sm: "4px",
+                              DEFAULT: "8px",
+                              md: "12px",
+                              lg: "16px",
+                              xl: "20px",
+                              "2xl": "24px",
+                              "3xl": "32px",
+                              full: "9999px",
+                              button: "8px",
+                          },
+                      },
+                  },
+              };
+        </script>
+        <link href="https://fonts.googleapis.com" rel="preconnect"/>
+        <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+        <link href="https://fonts.googleapis.com/css2?family=Pacifico&amp;display=swap" rel="stylesheet"/>
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&amp;family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js">
+        </script>
+        <style>
+         :where([class^="ri-"])::before {
+                  content: "\f3c2";
+              }
+      
+              body {
+                  font-family: "Poppins", sans-serif;
+                  overflow-x: hidden;
+              }
+      
+              .heading {
+                  font-family: "Playfair Display", serif;
+              }
+      
+              .navbar {
+                  backdrop-filter: blur(10px);
+                  -webkit-backdrop-filter: blur(10px);
+                  background-color: rgba(255, 255, 255, 0.7);
+                  transition: all 0.5s ease;
+              }
+      
+              .navbar.scrolled {
+                  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+              }
+      
+              .nav-link {
+                  position: relative;
+                  transition: all 0.3s ease;
+              }
+      
+              .nav-link::after {
+                  content: "";
+                  position: absolute;
+                  width: 0;
+                  height: 2px;
+                  bottom: -4px;
+                  left: 0;
+                  background-color: #8b5a2b;
+                  transition: width 0.3s ease;
+              }
+      
+              .nav-link:hover::after {
+                  width: 100%;
+              }
+      
+              .search-input {
+                  transition: all 0.3s ease;
+              }
+      
+              .search-input:focus {
+                  box-shadow: 0 0 0 3px rgba(139, 90, 43, 0.3);
+              }
+      
+              .search-icon {
+                  transition: transform 0.3s ease;
+              }
+      
+              .search-input:focus + .search-icon {
+                  transform: rotate(90deg);
+              }
+      
+              .hero-text span {
+                  display: inline-block;
+                  opacity: 0;
+                  transform: translateY(20px);
+                  animation: fadeInUp 0.5s forwards;
+              }
+      
+              @keyframes fadeInUp {
+                  to {
+                      opacity: 1;
+                      transform: translateY(0);
+                  }
+              }
+      
+              .coffee-cup {
+                  transition: transform 0.5s ease;
+                  transform-style: preserve-3d;
+              }
+      
+              .coffee-cup:hover {
+                  transform: rotate(10deg) scale(1.05);
+              }
+      
+              .carousel-container {
+                  perspective: 1000px;
+              }
+      
+              .carousel {
+                  transform-style: preserve-3d;
+                  transition: transform 1s ease;
+              }
+      
+              .carousel-item {
+                  position: absolute;
+                  width: 100%;
+                  height: 100%;
+                  backface-visibility: hidden;
+                  transition: all 0.5s ease;
+              }
+      
+              .card {
+                  transition: transform 0.5s ease, box-shadow 0.5s ease;
+              }
+      
+              .card:hover {
+                  transform: translateY(-10px);
+                  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+                      0 10px 10px -5px rgba(0, 0, 0, 0.04);
+              }
+      
+              .tool-card {
+                  transition: transform 0.5s ease;
+                  transform-style: preserve-3d;
+              }
+      
+              .tool-card:hover {
+                  transform: rotateY(10deg) scale(1.03);
+              }
+      
+              .tooltip {
+                  opacity: 0;
+                  transform: translateY(10px);
+                  transition: all 0.3s ease;
+                  pointer-events: none;
+              }
+      
+              .tool-card:hover .tooltip {
+                  opacity: 1;
+                  transform: translateY(0);
+              }
+      
+              .btn-primary {
+                  position: relative;
+                  overflow: hidden;
+              }
+      
+              .btn-primary::after {
+                  content: "";
+                  position: absolute;
+                  top: 50%;
+                  left: 50%;
+                  width: 0;
+                  height: 0;
+                  background-color: rgba(255, 255, 255, 0.2);
+                  border-radius: 50%;
+                  transform: translate(-50%, -50%);
+                  transition: width 0.6s ease, height 0.6s ease;
+              }
+      
+              .btn-primary:active::after {
+                  width: 300px;
+                  height: 300px;
+              }
+      
+              .parallax-bg {
+                  transform: translateZ(-10px) scale(2);
+              }
+      
+              .parallax-content {
+                  transform: translateZ(0);
+              }
+      
+              .custom-checkbox {
+                  appearance: none;
+                  -webkit-appearance: none;
+                  width: 20px;
+                  height: 20px;
+                  border: 2px solid #8b5a2b;
+                  border-radius: 4px;
+                  outline: none;
+                  transition: all 0.3s ease;
+                  position: relative;
+                  cursor: pointer;
+              }
+      
+              .custom-checkbox:checked {
+                  background-color: #8b5a2b;
+              }
+      
+              .custom-checkbox:checked::after {
+                  content: "";
+                  position: absolute;
+                  top: 2px;
+                  left: 6px;
+                  width: 5px;
+                  height: 10px;
+                  border: solid white;
+                  border-width: 0 2px 2px 0;
+                  transform: rotate(45deg);
+              }
+      
+              .loader {
+                  position: fixed;
+                  top: 0;
+                  left: 0;
+                  width: 100%;
+                  height: 100%;
+                  background-color: white;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  z-index: 9999;
+                  transition: opacity 0.5s ease;
+              }
+      
+              .loader.hidden {
+                  opacity: 0;
+                  pointer-events: none;
+              }
+      
+              .loader-coffee {
+                  width: 100px;
+                  height: 100px;
+                  position: relative;
+              }
+      
+              .loader-cup {
+                  width: 100px;
+                  height: 80px;
+                  background-color: #ffffff;
+                  border: 3px solid #8b5a2b;
+                  border-radius: 0 0 15px 15px;
+                  position: relative;
+                  box-shadow: 0 0 0 3px rgba(139, 90, 43, 0.3);
+              }
+      
+              .loader-handle {
+                  width: 20px;
+                  height: 40px;
+                  border: 3px solid #8b5a2b;
+                  border-left: none;
+                  border-radius: 0 10px 10px 0;
+                  position: absolute;
+                  right: -20px;
+                  top: 15px;
+              }
+      
+              .loader-liquid {
+                  width: 94px;
+                  height: 0%;
+                  background-color: #8b5a2b;
+                  position: absolute;
+                  bottom: 0;
+                  left: 0;
+                  border-radius: 0 0 12px 12px;
+                  animation: fill 2s ease-in-out infinite;
+              }
+      
+              @keyframes fill {
+                  0% {
+                      height: 0%;
+                  }
+                  90% {
+                      height: 90%;
+                  }
+                  100% {
+                      height: 90%;
+                  }
+              }
+      
+              .loader-steam {
+                  position: absolute;
+                  top: -15px;
+                  left: 25px;
+                  transform: scale(0.5);
+              }
+      
+              .steam {
+                  position: absolute;
+                  height: 0px;
+                  width: 8px;
+                  border-radius: 50%;
+                  background-color: #ffffff;
+                  margin-top: 20px;
+                  animation: steam 2s ease-out infinite;
+              }
+      
+              .steam:nth-child(1) {
+                  left: 0;
+                  animation-delay: 0.5s;
+              }
+      
+              .steam:nth-child(2) {
+                  left: 20px;
+                  animation-delay: 0.7s;
+              }
+      
+              .steam:nth-child(3) {
+                  left: 40px;
+                  animation-delay: 0.9s;
+              }
+      
+              @keyframes steam {
+                  0% {
+                      height: 0px;
+                      opacity: 0.5;
+                  }
+                  100% {
+                      height: 50px;
+                      opacity: 0;
+                  }
+              }
+      
+              .floating {
+                  animation: float 3s ease-in-out infinite;
+              }
+      
+              @keyframes float {
+                  0% {
+                      transform: translateY(0px);
+                  }
+                  50% {
+                      transform: translateY(-10px);
+                  }
+                  100% {
+                      transform: translateY(0px);
+                  }
+              }
+      
+              .scroll-indicator {
+                  position: absolute;
+                  bottom: 30px;
+                  left: 50%;
+                  transform: translateX(-50%);
+                  animation: bounce 2s infinite;
+              }
+      
+              @keyframes bounce {
+                  0%,
+                  20%,
+                  50%,
+                  80%,
+                  100% {
+                      transform: translateY(0) translateX(-50%);
+                  }
+                  40% {
+                      transform: translateY(-20px) translateX(-50%);
+                  }
+                  60% {
+                      transform: translateY(-10px) translateX(-50%);
+                  }
+              }
+      
+              .progress-bar {
+                  height: 4px;
+                  background-color: #8b5a2b;
+                  width: 0%;
+                  position: fixed;
+                  top: 0;
+                  left: 0;
+                  z-index: 1000;
+                  transition: width 0.1s ease;
+              }
+      
+              .split-text {
+                  display: inline-block;
+                  overflow: hidden;
+              }
+      
+              .split-text span {
+                  display: inline-block;
+                  transform: translateY(100%);
+                  animation: revealText 0.5s forwards;
+                  animation-delay: calc(var(--char-index) * 0.05s);
+              }
+      
+              @keyframes revealText {
+                  to {
+                      transform: translateY(0);
+                  }
+              }
+      
+              .coffee-bean {
+                  animation: rotate3D 15s linear infinite;
+              }
+      
+              @keyframes rotate3D {
+                  0% {
+                      transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+                  }
+                  100% {
+                      transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+                  }
+              }
+      
+              .reduced-motion {
+                  animation: none !important;
+                  transition: none !important;
+              }
+      
+              input[type="number"]::-webkit-inner-spin-button,
+              input[type="number"]::-webkit-outer-spin-button {
+                  -webkit-appearance: none;
+                  margin: 0;
+              }
+      
+              input[type="number"] {
+                  -moz-appearance: textfield;
+              }
+      
+              /* New styles for process steps container and items */
+              #coffee-process-animation {
+                  position: relative;
+                  height: auto !important;
+                  min-height: 0 !important;
+                  display: flex;
+                  justify-content: center;
+                  align-items: flex-start;
+                  gap: 1.5rem;
+                  padding: 2rem 0;
+                  flex-wrap: nowrap;
+                  overflow-x: auto;
+                  scroll-padding: 1rem;
+                  -webkit-overflow-scrolling: touch;
+              }
+      
+              #coffee-process-animation > .process-step {
+                  position: relative !important;
+                  transform: none !important;
+                  bottom: auto !important;
+                  right: auto !important;
+                  top: auto !important;
+                  left: auto !important;
+                  margin: 0 !important;
+                  flex: 0 0 auto;
+                  width: 16rem !important;
+                  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+                      0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+              }
+      
+              /* Optional: hide scrollbar for WebKit browsers */
+              #coffee-process-animation::-webkit-scrollbar {
+                  display: none;
+              }
+      
+              /* Optional: hide scrollbar for Firefox */
+              #coffee-process-animation {
+                  scrollbar-width: none;
+                  -ms-overflow-style: none;
+              }
+        </style>
+       </head>
+      <body class="bg-gray-50">
+  <!-- Progress Bar -->
+  <div class="progress-bar">
+</div>
+  <!-- Navbar -->
+  <nav class="navbar fixed top-0 left-0 w-full py-4 px-6 z-50 transition-all duration-300">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+     <div class="flex items-center">
+      <div class="coffee-cup w-12 h-12 flex items-center justify-center mr-3">
+       <span class="font-['Pacifico'] text-2xl text-primary">
+        logo
+       </span>
+      </div>
+      <div class="split-text heading">
+       <h1 class="text-2xl font-bold text-gray-800">
+        Brew Haven
+       </h1>
+      </div>
+     </div>
+     <div class="hidden md:flex items-center space-x-8">
+      <a class="nav-link text-gray-800 hover:text-primary transition-colors duration-300" href="#">
+       Home
+      </a>
+      <a class="nav-link text-gray-800 hover:text-primary transition-colors duration-300" href="#drinks">
+       Drinks
+      </a>
+      <a class="nav-link text-gray-800 hover:text-primary transition-colors duration-300" href="#tools">
+       Tools
+      </a>
+      <a class="nav-link text-gray-800 hover:text-primary transition-colors duration-300" href="#about">
+       About
+      </a>
+      <a class="nav-link text-gray-800 hover:text-primary transition-colors duration-300" href="#contact">
+       Contact
+      </a>
+     </div>
+     <div class="flex items-center space-x-4">
+      <div class="relative">
+       <input class="search-input bg-white border border-gray-300 rounded-full py-2 pl-4 pr-10 focus:outline-none focus:border-primary w-40 md:w-60" placeholder="Search..." type="text"/>
+       <div class="search-icon absolute right-3 top-1/2 transform -translate-y-1/2 w-6 h-6 flex items-center justify-center text-gray-500">
+        <i class="ri-search-line">
+        </i>
+       </div>
+      </div>
+      <div class="w-10 h-10 flex items-center justify-center rounded-full bg-primary/10 text-primary cursor-pointer hover:bg-primary/20 transition-colors duration-300">
+       <i class="ri-shopping-bag-line">
+       </i>
+      </div>
+      <div class="w-10 h-10 flex items-center justify-center rounded-full bg-primary/10 text-primary cursor-pointer hover:bg-primary/20 transition-colors duration-300 md:hidden" id="mobile-menu-button">
+       <i class="ri-menu-line">
+       </i>
+      </div>
+     </div>
+    </div>
+    <!-- Mobile Menu -->
+    <div class="md:hidden absolute top-full left-0 w-full bg-white shadow-lg rounded-b-lg py-4 px-6 hidden" id="mobile-menu">
+     <div class="flex flex-col space-y-4">
+      <a class="text-gray-800 hover:text-primary transition-colors duration-300" href="#">
+       Home
+      </a>
+      <a class="text-gray-800 hover:text-primary transition-colors duration-300" href="#drinks">
+       Drinks
+      </a>
+      <a class="text-gray-800 hover:text-primary transition-colors duration-300" href="#tools">
+       Tools
+      </a>
+      <a class="text-gray-800 hover:text-primary transition-colors duration-300" href="#about">
+       About
+      </a>
+      <a class="text-gray-800 hover:text-primary transition-colors duration-300" href="#contact">
+       Contact
+      </a>
+     </div>
+    </div>
+   </nav>
+
+    <main class="container mx-auto px-4 py-8">
+        <!-- Breadcrumbs -->
+        <div class="text-sm text-gray-500 mb-6">
+            <a href="#" class="hover:text-primary">Home</a> / 
+            <a href="#" class="hover:text-primary">Coffee</a> / 
+            <a href="#" class="hover:text-primary">Arabica</a> / 
+            <span class="text-gray-700">Ethiopian Yirgacheffe</span>
+        </div>
+
+        <div class="flex flex-col lg:flex-row gap-8 mb-12">
+            <!-- Product Gallery Section -->
+            <div class="lg:w-1/2">
+                <div class="zoom-container mb-4 rounded-lg overflow-hidden cursor-pointer" id="mainImageContainer">
+                    <img src="https://readdy.ai/api/search-image?query=A%20premium%20bag%20of%20Ethiopian%20Yirgacheffe%20coffee%20beans%2C%20expertly%20roasted%20to%20a%20medium-dark%20color.%20The%20packaging%20is%20elegant%20with%20gold%20accents%20on%20a%20deep%20blue%20background.%20The%20coffee%20beans%20are%20visible%20in%20a%20transparent%20window%20on%20the%20package.%20The%20image%20has%20a%20clean%2C%20minimalist%20background%20with%20soft%20lighting%20to%20highlight%20the%20premium%20quality%20of%20the%20product.&width=600&height=600&seq=1&orientation=squarish" alt="Ethiopian Yirgacheffe Coffee Beans" id="mainImage" class="w-full h-auto object-cover rounded-lg">
+                </div>
+                
+                <div class="product-gallery-thumbnails grid grid-cols-4 gap-2">
+                    <div class="border-2 border-transparent rounded cursor-pointer thumbnail active" data-img="https://readdy.ai/api/search-image?query=A%20premium%20bag%20of%20Ethiopian%20Yirgacheffe%20coffee%20beans%2C%20expertly%20roasted%20to%20a%20medium-dark%20color.%20The%20packaging%20is%20elegant%20with%20gold%20accents%20on%20a%20deep%20blue%20background.%20The%20coffee%20beans%20are%20visible%20in%20a%20transparent%20window%20on%20the%20package.%20The%20image%20has%20a%20clean%2C%20minimalist%20background%20with%20soft%20lighting%20to%20highlight%20the%20premium%20quality%20of%20the%20product.&width=600&height=600&seq=1&orientation=squarish">
+                        <img src="https://readdy.ai/api/search-image?query=A%20premium%20bag%20of%20Ethiopian%20Yirgacheffe%20coffee%20beans%2C%20expertly%20roasted%20to%20a%20medium-dark%20color.%20The%20packaging%20is%20elegant%20with%20gold%20accents%20on%20a%20deep%20blue%20background.%20The%20coffee%20beans%20are%20visible%20in%20a%20transparent%20window%20on%20the%20package.%20The%20image%20has%20a%20clean%2C%20minimalist%20background%20with%20soft%20lighting%20to%20highlight%20the%20premium%20quality%20of%20the%20product.&width=150&height=150&seq=1&orientation=squarish" alt="Product thumbnail 1" class="w-full h-auto object-cover rounded">
+                    </div>
+                    <div class="border-2 border-transparent rounded cursor-pointer thumbnail" data-img="https://readdy.ai/api/search-image?query=Close-up%20of%20loose%20Ethiopian%20Yirgacheffe%20coffee%20beans%20scattered%20on%20a%20wooden%20surface.%20The%20beans%20are%20a%20rich%2C%20consistent%20brown%20color%20showing%20their%20perfect%20roast.%20Natural%20morning%20light%20highlights%20the%20texture%20and%20oils%20of%20the%20beans.%20The%20background%20is%20simple%20and%20elegant%2C%20focusing%20attention%20on%20the%20quality%20of%20the%20coffee%20beans.&width=600&height=600&seq=2&orientation=squarish">
+                        <img src="https://readdy.ai/api/search-image?query=Close-up%20of%20loose%20Ethiopian%20Yirgacheffe%20coffee%20beans%20scattered%20on%20a%20wooden%20surface.%20The%20beans%20are%20a%20rich%2C%20consistent%20brown%20color%20showing%20their%20perfect%20roast.%20Natural%20morning%20light%20highlights%20the%20texture%20and%20oils%20of%20the%20beans.%20The%20background%20is%20simple%20and%20elegant%2C%20focusing%20attention%20on%20the%20quality%20of%20the%20coffee%20beans.&width=150&height=150&seq=2&orientation=squarish" alt="Product thumbnail 2" class="w-full h-auto object-cover rounded">
+                    </div>
+                    <div class="border-2 border-transparent rounded cursor-pointer thumbnail" data-img="https://readdy.ai/api/search-image?query=A%20steaming%20cup%20of%20freshly%20brewed%20Ethiopian%20Yirgacheffe%20coffee%20in%20an%20elegant%20white%20porcelain%20cup%20on%20a%20matching%20saucer.%20The%20coffee%20has%20a%20rich%20amber-brown%20color%20with%20a%20slight%20crema%20on%20top.%20Next%20to%20the%20cup%20is%20a%20small%20plate%20with%20chocolate%20biscotti.%20The%20scene%20is%20set%20on%20a%20marble%20countertop%20with%20soft%2C%20natural%20lighting%20creating%20an%20inviting%20atmosphere.&width=600&height=600&seq=3&orientation=squarish">
+                        <img src="https://readdy.ai/api/search-image?query=A%20steaming%20cup%20of%20freshly%20brewed%20Ethiopian%20Yirgacheffe%20coffee%20in%20an%20elegant%20white%20porcelain%20cup%20on%20a%20matching%20saucer.%20The%20coffee%20has%20a%20rich%20amber-brown%20color%20with%20a%20slight%20crema%20on%20top.%20Next%20to%20the%20cup%20is%20a%20small%20plate%20with%20chocolate%20biscotti.%20The%20scene%20is%20set%20on%20a%20marble%20countertop%20with%20soft%2C%20natural%20lighting%20creating%20an%20inviting%20atmosphere.&width=150&height=150&seq=3&orientation=squarish" alt="Product thumbnail 3" class="w-full h-auto object-cover rounded">
+                    </div>
+                    <div class="border-2 border-transparent rounded cursor-pointer thumbnail" data-img="https://readdy.ai/api/search-image?query=A%20coffee%20plantation%20in%20the%20highlands%20of%20Ethiopia%20where%20Yirgacheffe%20coffee%20is%20grown.%20Lush%20green%20coffee%20plants%20with%20bright%20red%20coffee%20cherries%20are%20visible%20in%20neat%20rows.%20The%20background%20shows%20misty%20mountains%20and%20a%20clear%20blue%20sky.%20The%20image%20captures%20the%20natural%20environment%20where%20this%20premium%20coffee%20originates%2C%20with%20perfect%20lighting%20highlighting%20the%20vibrant%20colors%20of%20the%20coffee%20cherries.&width=600&height=600&seq=4&orientation=squarish">
+                        <img src="https://readdy.ai/api/search-image?query=A%20coffee%20plantation%20in%20the%20highlands%20of%20Ethiopia%20where%20Yirgacheffe%20coffee%20is%20grown.%20Lush%20green%20coffee%20plants%20with%20bright%20red%20coffee%20cherries%20are%20visible%20in%20neat%20rows.%20The%20background%20shows%20misty%20mountains%20and%20a%20clear%20blue%20sky.%20The%20image%20captures%20the%20natural%20environment%20where%20this%20premium%20coffee%20originates%2C%20with%20perfect%20lighting%20highlighting%20the%20vibrant%20colors%20of%20the%20coffee%20cherries.&width=150&height=150&seq=4&orientation=squarish" alt="Product thumbnail 4" class="w-full h-auto object-cover rounded">
+                    </div>
+                </div>
+                
+                <div class="flex justify-center mt-4 space-x-4">
+                    <button class="flex items-center justify-center space-x-2 text-sm text-gray-600 hover:text-primary !rounded-button">
+                        <div class="w-5 h-5 flex items-center justify-center">
+                            <i class="ri-fullscreen-line"></i>
+                        </div>
+                        <span>View Larger</span>
+                    </button>
+                    <button class="flex items-center justify-center space-x-2 text-sm text-gray-600 hover:text-primary !rounded-button">
+                        <div class="w-5 h-5 flex items-center justify-center">
+                            <i class="ri-360-view-line"></i>
+                        </div>
+                        <span>360° View</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Product Information Section -->
+            <div class="lg:w-1/2">
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">Ethiopian Yirgacheffe Coffee Beans</h1>
+                <p class="text-sm text-gray-500 mb-4">Premium Single-Origin, Medium Roast</p>
+                
+                <div class="flex items-center mb-4">
+                    <div class="review-stars mr-2">
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-half-fill"></i>
+                    </div>
+                    <span class="text-sm text-gray-600">4.7 (128 reviews)</span>
+                </div>
+                
+                <div class="mb-6">
+                    <div class="flex items-baseline">
+                        <span class="text-2xl font-bold text-gray-900 mr-2">$24.95</span>
+                        <span class="text-lg text-gray-500 line-through">$29.95</span>
+                        <span class="ml-2 bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Save 17%</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-1">Price per 12 oz bag</p>
+                </div>
+                
+                <div class="mb-6">
+                    <h3 class="text-sm font-medium text-gray-900 mb-2">Grind Options</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="radio" name="grind" class="sr-only" checked>
+                            <span class="px-4 py-2 text-sm border border-gray-300 rounded-full bg-white hover:border-primary peer-checked:border-primary peer-checked:bg-primary/10">Whole Bean</span>
+                        </label>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="radio" name="grind" class="sr-only">
+                            <span class="px-4 py-2 text-sm border border-gray-300 rounded-full bg-white hover:border-primary">Espresso</span>
+                        </label>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="radio" name="grind" class="sr-only">
+                            <span class="px-4 py-2 text-sm border border-gray-300 rounded-full bg-white hover:border-primary">Drip</span>
+                        </label>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="radio" name="grind" class="sr-only">
+                            <span class="px-4 py-2 text-sm border border-gray-300 rounded-full bg-white hover:border-primary">French Press</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <h3 class="text-sm font-medium text-gray-900 mb-2">Size</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="radio" name="size" class="sr-only">
+                            <span class="px-4 py-2 text-sm border border-gray-300 rounded-full bg-white hover:border-primary">8 oz</span>
+                        </label>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="radio" name="size" class="sr-only" checked>
+                            <span class="px-4 py-2 text-sm border border-gray-300 rounded-full bg-white hover:border-primary peer-checked:border-primary peer-checked:bg-primary/10">12 oz</span>
+                        </label>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="radio" name="size" class="sr-only">
+                            <span class="px-4 py-2 text-sm border border-gray-300 rounded-full bg-white hover:border-primary">2 lb</span>
+                        </label>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="radio" name="size" class="sr-only">
+                            <span class="px-4 py-2 text-sm border border-gray-300 rounded-full bg-white hover:border-primary">5 lb</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <h3 class="text-sm font-medium text-gray-900 mb-2">Quantity</h3>
+                    <div class="flex items-center">
+                        <button class="w-10 h-10 flex items-center justify-center border border-gray-300 rounded-l-lg bg-gray-50 text-gray-600 hover:bg-gray-100 !rounded-button" id="decreaseQuantity">
+                            <i class="ri-subtract-line"></i>
+                        </button>
+                        <input type="number" value="1" min="1" class="w-16 h-10 border-y border-gray-300 text-center text-gray-900 text-sm focus:outline-none border-none" id="quantityInput">
+                        <button class="w-10 h-10 flex items-center justify-center border border-gray-300 rounded-r-lg bg-gray-50 text-gray-600 hover:bg-gray-100 !rounded-button" id="increaseQuantity">
+                            <i class="ri-add-line"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row gap-4 mb-8">
+                    <button class="flex-1 bg-primary text-white py-3 px-6 rounded font-medium hover:bg-primary/90 transition-colors whitespace-nowrap !rounded-button">
+                        <div class="flex items-center justify-center">
+                            <div class="w-5 h-5 flex items-center justify-center mr-2">
+                                <i class="ri-shopping-cart-2-line"></i>
+                            </div>
+                            <span>Add to Cart</span>
+                        </div>
+                    </button>
+                    <button class="flex-1 bg-gray-900 text-white py-3 px-6 rounded font-medium hover:bg-gray-800 transition-colors whitespace-nowrap !rounded-button">
+                        <div class="flex items-center justify-center">
+                            <div class="w-5 h-5 flex items-center justify-center mr-2">
+                                <i class="ri-bank-card-line"></i>
+                            </div>
+                            <span>Buy Now</span>
+                        </div>
+                    </button>
+                </div>
+                
+                <div class="flex items-center space-x-4 mb-6">
+                    <button class="flex items-center text-gray-500 hover:text-primary !rounded-button">
+                        <div class="w-5 h-5 flex items-center justify-center mr-1">
+                            <i class="ri-heart-line"></i>
+                        </div>
+                        <span class="text-sm">Add to Wishlist</span>
+                    </button>
+                    <button class="flex items-center text-gray-500 hover:text-primary !rounded-button">
+                        <div class="w-5 h-5 flex items-center justify-center mr-1">
+                            <i class="ri-share-line"></i>
+                        </div>
+                        <span class="text-sm">Share</span>
+                    </button>
+                </div>
+                
+                <div class="border-t border-gray-200 pt-6">
+                    <div class="flex items-center space-x-4 mb-4">
+                        <div class="w-10 h-10 flex items-center justify-center bg-green-100 rounded-full text-green-600">
+                            <i class="ri-truck-line"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-gray-900">Free Shipping</p>
+                            <p class="text-xs text-gray-500">On orders over $35</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-4 mb-4">
+                        <div class="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-full text-blue-600">
+                            <i class="ri-refresh-line"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-gray-900">Easy Returns</p>
+                            <p class="text-xs text-gray-500">30 day money back guarantee</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-4">
+                        <div class="w-10 h-10 flex items-center justify-center bg-purple-100 rounded-full text-purple-600">
+                            <i class="ri-shield-check-line"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-gray-900">Secure Checkout</p>
+                            <p class="text-xs text-gray-500">SSL encrypted payment</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Product Details Tabs -->
+        <div class="mb-12">
+            <div class="border-b border-gray-200">
+                <nav class="flex space-x-8" aria-label="Tabs">
+                    <button class="tab-button border-b-2 border-primary px-1 py-4 text-sm font-medium text-primary" aria-current="page" data-tab="description">Description</button>
+                    <button class="tab-button border-b-2 border-transparent px-1 py-4 text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="specifications">Specifications</button>
+                    <button class="tab-button border-b-2 border-transparent px-1 py-4 text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="shipping">Shipping & Returns</button>
+                    <button class="tab-button border-b-2 border-transparent px-1 py-4 text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="reviews">Reviews (128)</button>
+                </nav>
+            </div>
+            
+            <div class="py-6">
+                <div id="description" class="tab-content active">
+                    <div class="prose max-w-none">
+                        <p class="mb-4">Experience the exquisite flavor profile of our Ethiopian Yirgacheffe coffee beans, grown in the highlands of southern Ethiopia. These beans are known for their bright acidity, complex flavor notes, and floral aroma that coffee connoisseurs around the world cherish.</p>
+                        
+                        <p class="mb-4">Our Yirgacheffe beans are carefully sourced from small-scale farmers who use traditional methods to grow and harvest their crops. The beans are then medium roasted to perfection to highlight their natural characteristics while developing a balanced body.</p>
+                        
+                        <h3 class="text-lg font-medium text-gray-900 mt-6 mb-3">Tasting Notes</h3>
+                        <ul class="list-disc pl-5 mb-4 text-gray-600">
+                            <li>Floral and citrus aroma</li>
+                            <li>Bright, wine-like acidity</li>
+                            <li>Notes of bergamot, lemon, and jasmine</li>
+                            <li>Smooth, medium body</li>
+                            <li>Clean, sweet finish with hints of chocolate</li>
+                        </ul>
+                        
+                        <h3 class="text-lg font-medium text-gray-900 mt-6 mb-3">Perfect For</h3>
+                        <p class="mb-4">These beans shine in pour-over methods like Chemex or V60, which highlight their complex flavor profile. They also make an exceptional single-origin espresso with a bright, vibrant character.</p>
+                        
+                        <div class="bg-blue-50 p-4 rounded-lg mt-6">
+                            <h4 class="font-medium text-blue-800 mb-2">Sustainability Commitment</h4>
+                            <p class="text-blue-700 text-sm">Our Ethiopian Yirgacheffe beans are Rainforest Alliance certified, ensuring they are grown using methods that support social, economic, and environmental sustainability. We pay premium prices to farmers, investing in their communities and sustainable farming practices.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="specifications" class="tab-content hidden">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">Product Specifications</h3>
+                            <div class="space-y-3">
+                                <div class="flex">
+                                    <span class="w-1/3 text-gray-500">Origin</span>
+                                    <span class="w-2/3 text-gray-900">Yirgacheffe region, Ethiopia</span>
+                                </div>
+                                <div class="flex">
+                                    <span class="w-1/3 text-gray-500">Variety</span>
+                                    <span class="w-2/3 text-gray-900">Heirloom Ethiopian varieties</span>
+                                </div>
+                                <div class="flex">
+                                    <span class="w-1/3 text-gray-500">Process</span>
+                                    <span class="w-2/3 text-gray-900">Washed</span>
+                                </div>
+                                <div class="flex">
+                                    <span class="w-1/3 text-gray-500">Altitude</span>
+                                    <span class="w-2/3 text-gray-900">1,750 - 2,200 meters</span>
+                                </div>
+                                <div class="flex">
+                                    <span class="w-1/3 text-gray-500">Roast Level</span>
+                                    <span class="w-2/3 text-gray-900">Medium</span>
+                                </div>
+                                <div class="flex">
+                                    <span class="w-1/3 text-gray-500">Tasting Notes</span>
+                                    <span class="w-2/3 text-gray-900">Floral, citrus, bergamot, jasmine</span>
+                                </div>
+                                <div class="flex">
+                                    <span class="w-1/3 text-gray-500">Body</span>
+                                    <span class="w-2/3 text-gray-900">Medium</span>
+                                </div>
+                                <div class="flex">
+                                    <span class="w-1/3 text-gray-500">Acidity</span>
+                                    <span class="w-2/3 text-gray-900">Bright, vibrant</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">Packaging Information</h3>
+                            <div class="space-y-3">
+                                <div class="flex">
+                                    <span class="w-1/3 text-gray-500">Package Type</span>
+                                    <span class="w-2/3 text-gray-900">Valve bag with zipper</span>
+                                </div>
+                                <div class="flex">
+                                    <span class="w-1/3 text-gray-500">Available Sizes</span>
+                                    <span class="w-2/3 text-gray-900">8 oz, 12 oz, 2 lb, 5 lb</span>
+                                </div>
+                                <div class="flex">
+                                    <span class="w-1/3 text-gray-500">Shelf Life</span>
+                                    <span class="w-2/3 text-gray-900">6 months (unopened)</span>
+                                </div>
+                                <div class="flex">
+                                    <span class="w-1/3 text-gray-500">Storage</span>
+                                    <span class="w-2/3 text-gray-900">Cool, dry place away from direct sunlight</span>
+                                </div>
+                                <div class="flex">
+                                    <span class="w-1/3 text-gray-500">Roast Date</span>
+                                    <span class="w-2/3 text-gray-900">Printed on package</span>
+                                </div>
+                                <div class="flex">
+                                    <span class="w-1/3 text-gray-500">Certifications</span>
+                                    <span class="w-2/3 text-gray-900">Rainforest Alliance, Organic</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="shipping" class="tab-content hidden">
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-900 mb-3">Shipping Information</h3>
+                            <p class="text-gray-600 mb-4">We ship all orders within 24-48 hours of purchase (excluding weekends and holidays). All coffee is roasted to order to ensure maximum freshness.</p>
+                            
+                            <div class="bg-gray-50 p-4 rounded-lg mb-4">
+                                <h4 class="font-medium text-gray-900 mb-2">Shipping Methods & Timeframes</h4>
+                                <ul class="space-y-2 text-gray-600">
+                                    <li class="flex items-start">
+                                        <div class="w-5 h-5 flex items-center justify-center text-green-600 mt-0.5 mr-2">
+                                            <i class="ri-check-line"></i>
+                                        </div>
+                                        <div>
+                                            <span class="font-medium">Standard Shipping (Free on orders over $35)</span>
+                                            <p class="text-sm text-gray-500">3-5 business days</p>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-5 h-5 flex items-center justify-center text-green-600 mt-0.5 mr-2">
+                                            <i class="ri-check-line"></i>
+                                        </div>
+                                        <div>
+                                            <span class="font-medium">Expedited Shipping ($8.95)</span>
+                                            <p class="text-sm text-gray-500">2-3 business days</p>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-5 h-5 flex items-center justify-center text-green-600 mt-0.5 mr-2">
+                                            <i class="ri-check-line"></i>
+                                        </div>
+                                        <div>
+                                            <span class="font-medium">Priority Shipping ($12.95)</span>
+                                            <p class="text-sm text-gray-500">1-2 business days</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-900 mb-3">Return Policy</h3>
+                            <p class="text-gray-600 mb-4">We want you to be completely satisfied with your purchase. If you're not happy with your coffee for any reason, please contact us within 30 days of receiving your order.</p>
+                            
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <h4 class="font-medium text-gray-900 mb-2">Return Process</h4>
+                                <ol class="list-decimal pl-5 space-y-2 text-gray-600">
+                                    <li>Contact our customer service team at support@coffeeco.com to initiate a return.</li>
+                                    <li>Explain the reason for your return.</li>
+                                    <li>We'll provide a prepaid return shipping label (for defective products) or return instructions.</li>
+                                    <li>Once we receive the returned product, we'll process your refund or replacement within 5-7 business days.</li>
+                                </ol>
+                                
+                                <p class="text-sm text-gray-500 mt-4">Note: Due to the perishable nature of coffee, we can only accept returns of unopened packages unless the product is defective.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="reviews" class="tab-content hidden">
+                    <div class="mb-8">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-lg font-medium text-gray-900">Customer Reviews (128)</h3>
+                            <button class="bg-primary text-white px-4 py-2 rounded text-sm font-medium hover:bg-primary/90 transition-colors whitespace-nowrap !rounded-button">Write a Review</button>
+                        </div>
+                        
+                        <div class="flex flex-col md:flex-row gap-8">
+                            <div class="md:w-1/3">
+                                <div class="bg-gray-50 p-6 rounded-lg">
+                                    <div class="flex items-center mb-4">
+                                        <span class="text-5xl font-bold text-gray-900">4.7</span>
+                                        <div class="ml-4">
+                                            <div class="review-stars">
+                                                <i class="ri-star-fill"></i>
+                                                <i class="ri-star-fill"></i>
+                                                <i class="ri-star-fill"></i>
+                                                <i class="ri-star-fill"></i>
+                                                <i class="ri-star-half-fill"></i>
+                                            </div>
+                                            <p class="text-sm text-gray-500 mt-1">Based on 128 reviews</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="space-y-2">
+                                        <div class="flex items-center">
+                                            <span class="text-sm text-gray-600 w-10">5 ★</span>
+                                            <div class="w-full bg-gray-200 rounded-full h-2.5 ml-2">
+                                                <div class="bg-primary h-2.5 rounded-full" style="width: 78%"></div>
+                                            </div>
+                                            <span class="text-sm text-gray-600 w-10 text-right">78%</span>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <span class="text-sm text-gray-600 w-10">4 ★</span>
+                                            <div class="w-full bg-gray-200 rounded-full h-2.5 ml-2">
+                                                <div class="bg-primary h-2.5 rounded-full" style="width: 17%"></div>
+                                            </div>
+                                            <span class="text-sm text-gray-600 w-10 text-right">17%</span>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <span class="text-sm text-gray-600 w-10">3 ★</span>
+                                            <div class="w-full bg-gray-200 rounded-full h-2.5 ml-2">
+                                                <div class="bg-primary h-2.5 rounded-full" style="width: 3%"></div>
+                                            </div>
+                                            <span class="text-sm text-gray-600 w-10 text-right">3%</span>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <span class="text-sm text-gray-600 w-10">2 ★</span>
+                                            <div class="w-full bg-gray-200 rounded-full h-2.5 ml-2">
+                                                <div class="bg-primary h-2.5 rounded-full" style="width: 1%"></div>
+                                            </div>
+                                            <span class="text-sm text-gray-600 w-10 text-right">1%</span>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <span class="text-sm text-gray-600 w-10">1 ★</span>
+                                            <div class="w-full bg-gray-200 rounded-full h-2.5 ml-2">
+                                                <div class="bg-primary h-2.5 rounded-full" style="width: 1%"></div>
+                                            </div>
+                                            <span class="text-sm text-gray-600 w-10 text-right">1%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="md:w-2/3">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h4 class="font-medium text-gray-900">Recent Reviews</h4>
+                                    <div class="relative">
+                                        <button class="text-sm text-gray-600 flex items-center !rounded-button" id="filterDropdown">
+                                            <span>Sort by: Most Recent</span>
+                                            <div class="w-5 h-5 flex items-center justify-center ml-1">
+                                                <i class="ri-arrow-down-s-line"></i>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="space-y-6">
+                                    <!-- Review 1 -->
+                                    <div class="border-b border-gray-200 pb-6">
+                                        <div class="flex justify-between mb-2">
+                                            <div class="flex items-center">
+                                                <div class="review-stars mr-2">
+                                                    <i class="ri-star-fill"></i>
+                                                    <i class="ri-star-fill"></i>
+                                                    <i class="ri-star-fill"></i>
+                                                    <i class="ri-star-fill"></i>
+                                                    <i class="ri-star-fill"></i>
+                                                </div>
+                                                <span class="text-sm font-medium text-gray-900">Exceptional flavor profile</span>
+                                            </div>
+                                            <span class="text-xs text-gray-500">May 1, 2025</span>
+                                        </div>
+                                        <div class="mb-2">
+                                            <span class="text-sm font-medium text-gray-900">Michael Thompson</span>
+                                            <span class="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded ml-2">Verified Purchase</span>
+                                        </div>
+                                        <p class="text-sm text-gray-600 mb-3">This Ethiopian Yirgacheffe is truly exceptional. The floral and citrus notes are perfectly balanced, and the finish is remarkably clean. I've been brewing it in my Chemex, and the results are consistently outstanding. Definitely worth the premium price!</p>
+                                        <div class="flex items-center text-sm text-gray-500">
+                                            <button class="flex items-center mr-4 hover:text-gray-700 !rounded-button">
+                                                <div class="w-4 h-4 flex items-center justify-center mr-1">
+                                                    <i class="ri-thumb-up-line"></i>
+                                                </div>
+                                                <span>Helpful (24)</span>
+                                            </button>
+                                            <button class="hover:text-gray-700 !rounded-button">Report</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Review 2 -->
+                                    <div class="border-b border-gray-200 pb-6">
+                                        <div class="flex justify-between mb-2">
+                                            <div class="flex items-center">
+                                                <div class="review-stars mr-2">
+                                                    <i class="ri-star-fill"></i>
+                                                    <i class="ri-star-fill"></i>
+                                                    <i class="ri-star-fill"></i>
+                                                    <i class="ri-star-fill"></i>
+                                                    <i class="ri-star-line"></i>
+                                                </div>
+                                                <span class="text-sm font-medium text-gray-900">Great coffee, slightly pricey</span>
+                                            </div>
+                                            <span class="text-xs text-gray-500">April 28, 2025</span>
+                                        </div>
+                                        <div class="mb-2">
+                                            <span class="text-sm font-medium text-gray-900">Rebecca Johnson</span>
+                                            <span class="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded ml-2">Verified Purchase</span>
+                                        </div>
+                                        <p class="text-sm text-gray-600 mb-3">The flavor is excellent - bright and complex with those lovely floral notes typical of Yirgacheffe. I'm taking off one star only because of the price point, which is a bit high even for specialty coffee. That said, I'll probably order again because the quality is undeniable.</p>
+                                        <div class="flex items-center text-sm text-gray-500">
+                                            <button class="flex items-center mr-4 hover:text-gray-700 !rounded-button">
+                                                <div class="w-4 h-4 flex items-center justify-center mr-1">
+                                                    <i class="ri-thumb-up-line"></i>
+                                                </div>
+                                                <span>Helpful (17)</span>
+                                            </button>
+                                            <button class="hover:text-gray-700 !rounded-button">Report</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Review 3 -->
+                                    <div>
+                                        <div class="flex justify-between mb-2">
+                                            <div class="flex items-center">
+                                                <div class="review-stars mr-2">
+                                                    <i class="ri-star-fill"></i>
+                                                    <i class="ri-star-fill"></i>
+                                                    <i class="ri-star-fill"></i>
+                                                    <i class="ri-star-fill"></i>
+                                                    <i class="ri-star-half-fill"></i>
+                                                </div>
+                                                <span class="text-sm font-medium text-gray-900">Perfect for pour-over</span>
+                                            </div>
+                                            <span class="text-xs text-gray-500">April 22, 2025</span>
+                                        </div>
+                                        <div class="mb-2">
+                                            <span class="text-sm font-medium text-gray-900">James Wilson</span>
+                                            <span class="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded ml-2">Verified Purchase</span>
+                                        </div>
+                                        <p class="text-sm text-gray-600 mb-3">I've been exploring different single-origin coffees for a while, and this Ethiopian Yirgacheffe is among the best I've tried. The jasmine and citrus notes really shine through in a pour-over. The beans were clearly fresh, and the packaging kept them well protected. Will definitely be ordering again!</p>
+                                        <div class="flex items-center text-sm text-gray-500">
+                                            <button class="flex items-center mr-4 hover:text-gray-700 !rounded-button">
+                                                <div class="w-4 h-4 flex items-center justify-center mr-1">
+                                                    <i class="ri-thumb-up-line"></i>
+                                                </div>
+                                                <span>Helpful (9)</span>
+                                            </button>
+                                            <button class="hover:text-gray-700 !rounded-button">Report</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-6 text-center">
+                                    <button class="text-primary hover:text-primary/80 text-sm font-medium !rounded-button">Load More Reviews</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Location Information -->
+        <div class="bg-white shadow rounded-lg p-6 mb-12">
+            <h2 class="text-xl font-bold text-gray-900 mb-4">Availability & Shipping Information</h2>
+            
+            <div class="flex flex-col md:flex-row gap-8">
+                <div class="md:w-1/2">
+                    <div class="mb-6">
+                        <h3 class="text-lg font-medium text-gray-900 mb-3">Warehouse Location</h3>
+                        <div class="flex items-start mb-2">
+                            <div class="w-5 h-5 flex items-center justify-center text-primary mt-0.5 mr-2">
+                                <i class="ri-map-pin-line"></i>
+                            </div>
+                            <div>
+                                <p class="text-gray-900">Coffee Roastery Warehouse</p>
+                                <p class="text-sm text-gray-500">1234 Roasting Ave, Portland, OR 97214</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center text-sm text-primary mb-4">
+                            <div class="w-5 h-5 flex items-center justify-center mr-1">
+                                <i class="ri-store-line"></i>
+                            </div>
+                            <span>In stock (32 units)</span>
+                        </div>
+                        
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h4 class="font-medium text-gray-900 mb-2">Estimated Delivery</h4>
+                            <div class="flex items-start mb-2">
+                                <div class="w-5 h-5 flex items-center justify-center text-green-600 mt-0.5 mr-2">
+                                    <i class="ri-truck-line"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-900">Standard Shipping (Free)</p>
+                                    <p class="text-xs text-gray-500">Estimated delivery: May 4 - May 6</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-5 h-5 flex items-center justify-center text-green-600 mt-0.5 mr-2">
+                                    <i class="ri-rocket-line"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-900">Expedited Shipping ($8.95)</p>
+                                    <p class="text-xs text-gray-500">Estimated delivery: May 3</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-medium text-gray-900 mb-3">Local Pickup Options</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-start">
+                                <label class="custom-checkbox">
+                                    <input type="radio" name="pickup" checked>
+                                    <span class="checkmark"></span>
+                                </label>
+                                <div class="ml-7">
+                                    <p class="text-gray-900">Main Street Coffee Shop</p>
+                                    <p class="text-sm text-gray-500">567 Main St, Portland, OR 97204</p>
+                                    <p class="text-xs text-green-600 mt-1">Available for pickup tomorrow</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <label class="custom-checkbox">
+                                    <input type="radio" name="pickup">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <div class="ml-7">
+                                    <p class="text-gray-900">Downtown Roastery</p>
+                                    <p class="text-sm text-gray-500">789 Roaster Blvd, Portland, OR 97209</p>
+                                    <p class="text-xs text-green-600 mt-1">Available for pickup tomorrow</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <label class="custom-checkbox">
+                                    <input type="radio" name="pickup">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <div class="ml-7">
+                                    <p class="text-gray-900">Eastside Coffee Hub</p>
+                                    <p class="text-sm text-gray-500">456 Brewer St, Portland, OR 97232</p>
+                                    <p class="text-xs text-green-600 mt-1">Available for pickup on May 3</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2">
+                    <h3 class="text-lg font-medium text-gray-900 mb-3">Pickup Locations</h3>
+                    <div class="h-80 rounded-lg overflow-hidden mb-2" style="background-image: url('https://public.readdy.ai/gen_page/map_placeholder_1280x720.png'); background-position: center; background-size: cover;"></div>
+                    <p class="text-sm text-gray-500 text-center">Map shows available pickup locations in Portland, OR</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Advertisement Section -->
+        <div class="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg overflow-hidden mb-12">
+            <div class="px-6 py-8 md:px-12 md:py-10 flex flex-col md:flex-row items-center">
+                <div class="md:w-2/3 mb-6 md:mb-0">
+                    <span class="inline-block bg-white/20 text-white text-xs font-medium px-2.5 py-1 rounded mb-3">Limited Time Offer</span>
+                    <h3 class="text-2xl md:text-3xl font-bold text-white mb-2">Coffee Subscription - 15% OFF</h3>
+                    <p class="text-white/80 mb-4">Subscribe to regular deliveries and never run out of your favorite coffee. Get 15% off your first three orders!</p>
+                    <button class="bg-white text-primary px-6 py-2 rounded font-medium hover:bg-gray-100 transition-colors whitespace-nowrap !rounded-button">Learn More</button>
+                </div>
+                <div class="md:w-1/3 flex justify-center">
+                    <img src="https://readdy.ai/api/search-image?query=A%20stylish%20coffee%20subscription%20box%20with%20an%20elegant%20design.%20The%20box%20contains%20a%20bag%20of%20coffee%20beans%2C%20a%20small%20coffee%20guide%20booklet%2C%20and%20some%20coffee%20accessories.%20The%20image%20has%20a%20clean%20white%20background%20with%20soft%20shadows%20to%20create%20depth.%20The%20lighting%20is%20bright%20and%20professional%2C%20highlighting%20the%20premium%20nature%20of%20the%20subscription%20service.&width=300&height=300&seq=5&orientation=squarish" alt="Coffee Subscription Box" class="max-w-full h-auto rounded-lg">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Related Products Section -->
+        <div class="mb-12">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-bold text-gray-900">You May Also Like</h2>
+                <div class="flex space-x-2">
+                    <button class="w-10 h-10 flex items-center justify-center border border-gray-300 rounded-full bg-white hover:bg-gray-50" id="prevRelated">
+                        <i class="ri-arrow-left-s-line"></i>
+                    </button>
+                    <button class="w-10 h-10 flex items-center justify-center border border-gray-300 rounded-full bg-white hover:bg-gray-50" id="nextRelated">
+                        <i class="ri-arrow-right-s-line"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="relative">
+                <div class="flex space-x-4 overflow-x-auto pb-2 hide-scrollbar" id="relatedProducts">
+                    <!-- Product 1 -->
+                    <div class="flex-shrink-0 w-64">
+                        <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                            <div class="zoom-container h-48">
+                                <img src="https://readdy.ai/api/search-image?query=A%20bag%20of%20Sumatra%20coffee%20beans%20with%20a%20dark%2C%20earthy-toned%20packaging.%20The%20bag%20features%20traditional%20Indonesian%20design%20elements%20and%20a%20small%20window%20showing%20the%20dark%20roasted%20beans%20inside.%20The%20background%20is%20clean%20and%20minimal%2C%20with%20professional%20product%20lighting%20highlighting%20the%20premium%20quality%20of%20the%20coffee.&width=300&height=300&seq=6&orientation=squarish" alt="Sumatra Dark Roast" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-4">
+                                <div class="flex items-center mb-1">
+                                    <div class="review-stars text-xs mr-1">
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-line"></i>
+                                    </div>
+                                    <span class="text-xs text-gray-500">(86)</span>
+                                </div>
+                                <h3 class="font-medium text-gray-900 mb-1">Sumatra Dark Roast</h3>
+                                <p class="text-sm text-gray-500 mb-2">Bold, earthy, low acidity</p>
+                                <div class="flex items-center justify-between">
+                                    <span class="font-medium text-gray-900">$21.95</span>
+                                    <button class="w-8 h-8 flex items-center justify-center bg-primary text-white rounded-full hover:bg-primary/90 !rounded-button">
+                                        <i class="ri-add-line"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Product 2 -->
+                    <div class="flex-shrink-0 w-64">
+                        <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                            <div class="zoom-container h-48">
+                                <img src="https://readdy.ai/api/search-image?query=A%20bag%20of%20Colombian%20coffee%20beans%20with%20vibrant%2C%20colorful%20packaging%20featuring%20coffee%20cherries%20and%20Colombian%20landscape%20elements.%20The%20bag%20has%20a%20premium%20look%20with%20gold%20accents%20and%20a%20small%20window%20showing%20the%20medium-roasted%20beans.%20The%20background%20is%20clean%20and%20minimal%2C%20with%20professional%20lighting%20highlighting%20the%20product%20details.&width=300&height=300&seq=7&orientation=squarish" alt="Colombian Medium Roast" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-4">
+                                <div class="flex items-center mb-1">
+                                    <div class="review-stars text-xs mr-1">
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-half-fill"></i>
+                                    </div>
+                                    <span class="text-xs text-gray-500">(112)</span>
+                                </div>
+                                <h3 class="font-medium text-gray-900 mb-1">Colombian Medium Roast</h3>
+                                <p class="text-sm text-gray-500 mb-2">Sweet, balanced, nutty</p>
+                                <div class="flex items-center justify-between">
+                                    <span class="font-medium text-gray-900">$22.95</span>
+                                    <button class="w-8 h-8 flex items-center justify-center bg-primary text-white rounded-full hover:bg-primary/90 !rounded-button">
+                                        <i class="ri-add-line"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Product 3 -->
+                    <div class="flex-shrink-0 w-64">
+                        <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                            <div class="zoom-container h-48">
+                                <img src="https://readdy.ai/api/search-image?query=A%20bag%20of%20Guatemalan%20coffee%20beans%20with%20elegant%20packaging%20featuring%20traditional%20Guatemalan%20textile%20patterns%20and%20colors.%20The%20bag%20has%20a%20premium%20look%20with%20a%20small%20window%20showing%20the%20medium-dark%20roasted%20beans.%20The%20background%20is%20clean%20and%20minimal%2C%20with%20professional%20lighting%20highlighting%20the%20products%20premium%20quality.&width=300&height=300&seq=8&orientation=squarish" alt="Guatemalan Medium-Dark" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-4">
+                                <div class="flex items-center mb-1">
+                                    <div class="review-stars text-xs mr-1">
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-line"></i>
+                                    </div>
+                                    <span class="text-xs text-gray-500">(74)</span>
+                                </div>
+                                <h3 class="font-medium text-gray-900 mb-1">Guatemalan Medium-Dark</h3>
+                                <p class="text-sm text-gray-500 mb-2">Chocolate, spice, complex</p>
+                                <div class="flex items-center justify-between">
+                                    <span class="font-medium text-gray-900">$23.95</span>
+                                    <button class="w-8 h-8 flex items-center justify-center bg-primary text-white rounded-full hover:bg-primary/90 !rounded-button">
+                                        <i class="ri-add-line"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Product 4 -->
+                    <div class="flex-shrink-0 w-64">
+                        <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                            <div class="zoom-container h-48">
+                                <img src="https://readdy.ai/api/search-image?query=A%20bag%20of%20Costa%20Rican%20coffee%20beans%20with%20elegant%20packaging%20featuring%20tropical%20elements%20and%20Costa%20Rican%20landscapes.%20The%20bag%20has%20a%20premium%20look%20with%20a%20small%20window%20showing%20the%20light-medium%20roasted%20beans.%20The%20background%20is%20clean%20and%20minimal%2C%20with%20professional%20lighting%20highlighting%20the%20products%20premium%20quality.&width=300&height=300&seq=9&orientation=squarish" alt="Costa Rican Light Roast" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-4">
+                                <div class="flex items-center mb-1">
+                                    <div class="review-stars text-xs mr-1">
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <span class="text-xs text-gray-500">(93)</span>
+                                </div>
+                                <h3 class="font-medium text-gray-900 mb-1">Costa Rican Light Roast</h3>
+                                <p class="text-sm text-gray-500 mb-2">Bright, honey, citrus</p>
+                                <div class="flex items-center justify-between">
+                                    <span class="font-medium text-gray-900">$24.95</span>
+                                    <button class="w-8 h-8 flex items-center justify-center bg-primary text-white rounded-full hover:bg-primary/90 !rounded-button">
+                                        <i class="ri-add-line"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Product 5 -->
+                    <div class="flex-shrink-0 w-64">
+                        <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                            <div class="zoom-container h-48">
+                                <img src="https://readdy.ai/api/search-image?query=A%20bag%20of%20Kenyan%20coffee%20beans%20with%20bold%2C%20vibrant%20packaging%20featuring%20African%20design%20elements%20and%20colors.%20The%20bag%20has%20a%20premium%20look%20with%20a%20small%20window%20showing%20the%20medium-dark%20roasted%20beans.%20The%20background%20is%20clean%20and%20minimal%2C%20with%20professional%20lighting%20highlighting%20the%20products%20premium%20quality.&width=300&height=300&seq=10&orientation=squarish" alt="Kenya AA Medium-Dark" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-4">
+                                <div class="flex items-center mb-1">
+                                    <div class="review-stars text-xs mr-1">
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-half-fill"></i>
+                                    </div>
+                                    <span class="text-xs text-gray-500">(67)</span>
+                                </div>
+                                <h3 class="font-medium text-gray-900 mb-1">Kenya AA Medium-Dark</h3>
+                                <p class="text-sm text-gray-500 mb-2">Fruity, winey, bright</p>
+                                <div class="flex items-center justify-between">
+                                    <span class="font-medium text-gray-900">$25.95</span>
+                                    <button class="w-8 h-8 flex items-center justify-center bg-primary text-white rounded-full hover:bg-primary/90 !rounded-button">
+                                        <i class="ri-add-line"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Recently Viewed Products -->
+        <div class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">Recently Viewed</h2>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Product 1 -->
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                    <div class="zoom-container h-48">
+                        <img src="https://readdy.ai/api/search-image?query=A%20bag%20of%20Brazilian%20coffee%20beans%20with%20warm-toned%20packaging%20featuring%20coffee%20plantation%20imagery.%20The%20bag%20has%20a%20premium%20look%20with%20a%20small%20window%20showing%20the%20medium%20roasted%20beans.%20The%20background%20is%20clean%20and%20minimal%2C%20with%20professional%20lighting%20highlighting%20the%20products%20premium%20quality.&width=300&height=300&seq=11&orientation=squarish" alt="Brazilian Medium Roast" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-medium text-gray-900 mb-1">Brazilian Medium Roast</h3>
+                        <div class="flex items-center justify-between">
+                            <span class="font-medium text-gray-900">$20.95</span>
+                            <div class="review-stars text-xs">
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-line"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                    <div class="zoom-container h-48">
+                        <img src="https://readdy.ai/api/search-image?query=A%20coffee%20brewing%20equipment%20set%20featuring%20a%20premium%20pour-over%20coffee%20maker%20with%20glass%20carafe%20and%20wooden%20collar.%20The%20set%20includes%20a%20matching%20coffee%20grinder%20and%20a%20bag%20of%20coffee%20beans.%20The%20background%20is%20clean%20and%20minimal%2C%20with%20professional%20lighting%20highlighting%20the%20premium%20quality%20of%20the%20products.&width=300&height=300&seq=12&orientation=squarish" alt="Pour Over Coffee Set" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-medium text-gray-900 mb-1">Pour Over Coffee Set</h3>
+                        <div class="flex items-center justify-between">
+                            <span class="font-medium text-gray-900">$64.95</span>
+                            <div class="review-stars text-xs">
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-half-fill"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                    <div class="zoom-container h-48">
+                        <img src="https://readdy.ai/api/search-image?query=A%20premium%20coffee%20grinder%20with%20a%20sleek%2C%20modern%20design.%20The%20grinder%20has%20a%20stainless%20steel%20body%20with%20wooden%20accents%20and%20a%20clear%20bean%20hopper%20on%20top.%20The%20background%20is%20clean%20and%20minimal%2C%20with%20professional%20lighting%20highlighting%20the%20premium%20quality%20and%20craftsmanship%20of%20the%20product.&width=300&height=300&seq=13&orientation=squarish" alt="Burr Coffee Grinder" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-medium text-gray-900 mb-1">Burr Coffee Grinder</h3>
+                        <div class="flex items-center justify-between">
+                            <span class="font-medium text-gray-900">$89.95</span>
+                            <div class="review-stars text-xs">
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-line"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                    <div class="zoom-container h-48">
+                        <img src="https://readdy.ai/api/search-image?query=A%20set%20of%20elegant%20ceramic%20coffee%20mugs%20in%20different%20earthy%20tones.%20The%20mugs%20have%20a%20modern%2C%20minimalist%20design%20with%20smooth%20curves%20and%20comfortable%20handles.%20They%20are%20arranged%20artfully%20on%20a%20wooden%20surface.%20The%20background%20is%20clean%20and%20minimal%2C%20with%20professional%20lighting%20highlighting%20the%20premium%20quality%20and%20craftsmanship%20of%20the%20products.&width=300&height=300&seq=14&orientation=squarish" alt="Ceramic Coffee Mug Set" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-medium text-gray-900 mb-1">Ceramic Coffee Mug Set</h3>
+                        <div class="flex items-center justify-between">
+                            <span class="font-medium text-gray-900">$34.95</span>
+                            <div class="review-stars text-xs">
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-12 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <a href="#" class="text-2xl font-['Pacifico'] text-white mb-4 block">logo</a>
+                    <p class="text-gray-400 mb-4">Premium coffee beans sourced from the world's finest growing regions, expertly roasted to perfection.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <div class="w-8 h-8 flex items-center justify-center">
+                                <i class="ri-facebook-fill"></i>
+                            </div>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <div class="w-8 h-8 flex items-center justify-center">
+                                <i class="ri-instagram-line"></i>
+                            </div>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <div class="w-8 h-8 flex items-center justify-center">
+                                <i class="ri-twitter-x-line"></i>
+                            </div>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <div class="w-8 h-8 flex items-center justify-center">
+                                <i class="ri-pinterest-line"></i>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-medium mb-4">Shop</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">All Coffee</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Single Origin</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Blends</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Brewing Equipment</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Gift Sets</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Subscriptions</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-medium mb-4">Company</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Our Roastery</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Sustainability</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Careers</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Wholesale</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-medium mb-4">Newsletter</h3>
+                    <p class="text-gray-400 mb-4">Subscribe to receive updates, access to exclusive deals, and more.</p>
+                    <form class="mb-4">
+                        <div class="flex">
+                            <input type="email" placeholder="Your email address" class="flex-grow px-4 py-2 rounded-l text-gray-900 text-sm focus:outline-none border-none">
+                            <button type="submit" class="bg-primary text-white px-4 py-2 rounded-r text-sm font-medium hover:bg-primary/90 transition-colors whitespace-nowrap !rounded-button">Subscribe</button>
+                        </div>
+                    </form>
+                    <p class="text-xs text-gray-500">By subscribing, you agree to our Privacy Policy and consent to receive updates from our company.</p>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 text-sm mb-4 md:mb-0">&copy; 2025 Coffee Co. All rights reserved.</p>
+                    
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <div class="flex items-center">
+                            <div class="w-8 h-5 flex items-center justify-center mr-1 text-white">
+                                <i class="ri-visa-fill"></i>
+                            </div>
+                            <div class="w-8 h-5 flex items-center justify-center mr-1 text-white">
+                                <i class="ri-mastercard-fill"></i>
+                            </div>
+                            <div class="w-8 h-5 flex items-center justify-center mr-1 text-white">
+                                <i class="ri-paypal-fill"></i>
+                            </div>
+                            <div class="w-8 h-5 flex items-center justify-center text-white">
+                                <i class="ri-apple-fill"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="flex space-x-4 text-sm text-gray-400">
+                            <a href="#" class="hover:text-white">Privacy Policy</a>
+                            <a href="#" class="hover:text-white">Terms of Service</a>
+                            <a href="#" class="hover:text-white">Refund Policy</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Quantity Input
+            const quantityInput = document.getElementById('quantityInput');
+            const decreaseBtn = document.getElementById('decreaseQuantity');
+            const increaseBtn = document.getElementById('increaseQuantity');
+            
+            decreaseBtn.addEventListener('click', function() {
+                const currentValue = parseInt(quantityInput.value);
+                if (currentValue > 1) {
+                    quantityInput.value = currentValue - 1;
+                }
+            });
+            
+            increaseBtn.addEventListener('click', function() {
+                const currentValue = parseInt(quantityInput.value);
+                quantityInput.value = currentValue + 1;
+            });
+            
+            // Product Gallery Thumbnails
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            const mainImage = document.getElementById('mainImage');
+            
+            thumbnails.forEach(thumbnail => {
+                thumbnail.addEventListener('click', function() {
+                    const imgSrc = this.getAttribute('data-img');
+                    mainImage.src = imgSrc;
+                    
+                    // Update active state
+                    thumbnails.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Image Zoom
+            const mainImageContainer = document.getElementById('mainImageContainer');
+            const zoomOverlay = document.getElementById('zoomOverlay');
+            const zoomedImage = document.getElementById('zoomedImage');
+            const closeZoom = document.getElementById('closeZoom');
+            
+            mainImageContainer.addEventListener('click', function() {
+                zoomedImage.src = mainImage.src;
+                zoomOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            closeZoom.addEventListener('click', function() {
+                zoomOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+            
+            zoomOverlay.addEventListener('click', function(e) {
+                if (e.target === zoomOverlay) {
+                    zoomOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+            
+            // Tabs
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // Update active tab button
+                    tabButtons.forEach(btn => {
+                        btn.classList.remove('border-primary', 'text-primary');
+                        btn.classList.add('border-transparent', 'text-gray-500');
+                    });
+                    this.classList.remove('border-transparent', 'text-gray-500');
+                    this.classList.add('border-primary', 'text-primary');
+                    
+                    // Update active tab content
+                    tabContents.forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // Related Products Carousel
+            const relatedProducts = document.getElementById('relatedProducts');
+            const prevBtn = document.getElementById('prevRelated');
+            const nextBtn = document.getElementById('nextRelated');
+            
+            nextBtn.addEventListener('click', function() {
+                relatedProducts.scrollBy({
+                    left: 280,
+                    behavior: 'smooth'
+                });
+            });
+            
+            prevBtn.addEventListener('click', function() {
+                relatedProducts.scrollBy({
+                    left: -280,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+    
+</body>
+</html>
